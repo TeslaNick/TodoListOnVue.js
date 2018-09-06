@@ -3,28 +3,38 @@
         <link rel="stylesheet" href="index.css" >
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    </head>
-    <body>
-		<div id="todo-list-example">
-			<form v-on:submit.prevent="addNewTodo">
-			<label for="new-todo">Добавить задачу</label>
-			<input
-				v-model="newTodoText"
-				id="new-todo"
-				placeholder=""
-			>
-			<button>Добавить</button>
+		<title>Список завдань</title>
+	</head>
+	<body>
+		<div id="todolist">
+			<h1>Список завдань</h1>
+
+		<!-- Add new task form -->
+			<h2>Додати завдання</h2>
+
+			<form v-on:submit='addTodo'>
+				<input type="text" v-model='todos.name'>
+				<input type="submit" value='Додати'>
 			</form>
-		<ul>
-			<li
-				is="todo-item"
-				v-for="(todo, index) in todos"
-				v-bind:key="todo.id"
-				v-bind:title="todo.title"
-			v-on:remove="todos.splice(index, 1)"
-			></li>
-		</ul>
+		
+		<table>
+			<thead>
+				<th>Зроблено</th>
+				<th>Завдання</th>
+				<th>Видалити</th>
+			</thead>
+
+			<tbody>
+				<tr v-for='todo in todos'>
+					<td><input type="checkbox" v-model="todo.done"></td>
+					<td><span :class="{ todoDone: todo.done }">{{ todo.name }}</span></td>
+					<td><button v-on:click="deleteTodo(todo)">Видалити</button></td>
+				</tr>
+			</tbody>
+		</table>
 		</div>
+ 
+
 		<script src="todo.js"></script>
     </body>
 </html>

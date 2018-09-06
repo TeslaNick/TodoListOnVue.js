@@ -1,40 +1,22 @@
-Vue.component('todo-item', {
-  template: '\
-    <li>\
-      {{ title }}\
-      <button v-on:click="$emit(\'remove\')">Удалить</button>\
-    </li>\
-  ',
-  props: ['title']
-})
-
-new Vue({
-  el: '#todo-list-example',
+var todolist = new Vue({
+  el: '#todolist',
   data: {
-    newTodoText: '',
     todos: [
-      {
-        id: 1,
-        title: 'Зробити ТУДУ лист'
-      },
-      {
-        id: 2,
-        title: 'Залити його на ГИТ'
-      },
-      {
-        id: 3,
-        title: 'Чекати, що скаже Ігор (я хатіко)'
-      }
-    ],
-    nextTodoId: 4
+      { name: 'Зробити ТУДУ лист', done: false },
+      { name: 'Залити його на ГИТ', done: false },
+      { name: 'Чекати, що скаже Ігор (я хатіко)', done: false },
+    ]
   },
   methods: {
-    addNewTodo: function () {
+    addTodo: function(e) {
+      e.preventDefault();
       this.todos.push({
-        id: this.nextTodoId++,
-        title: this.newTodoText
-      })
-      this.newTodoText = ''
+        name: this.todos.name,
+        done: false
+      });
+    },
+    deleteTodo: function(todo) {
+      this.todos.splice(this.todos.indexOf(todo), 1)
     }
   }
-})
+});
